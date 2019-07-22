@@ -9,20 +9,14 @@ import java.net.*;
 import java.io.*;
 
 public class Main {
-
-    private static final String WHATS_MY_IP = "http://checkip.amazonaws.com";
-    private static final String USER_NAME = "someone@gmail.com";
-    private static final String PASSWORD = "password";
-    private static final String RECIPIENT = "recipient@gmail.com";
-
     public static void main(String[] args) throws IOException, MessagingException {
 
         String computerName = args.length > 0 ? args[0] : "";
-        String[] to = { RECIPIENT };
+        String[] to = { Settings.RECIPIENT };
         String subject = computerName + " Public IP";
         String body = getPublicIp();
 
-        sendFromGMail(USER_NAME, PASSWORD, to, subject, body);
+        sendFromGMail(Settings.USER_NAME, Settings.PASSWORD, to, subject, body);
     }
 
     private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) throws MessagingException {
@@ -63,7 +57,7 @@ public class Main {
     }
 
     private static String getPublicIp() throws IOException {
-        URL whatismyip = new URL(WHATS_MY_IP);
+        URL whatismyip = new URL(Settings.WHATS_MY_IP);
         try (InputStream is = whatismyip.openStream();
              InputStreamReader streamReader = new InputStreamReader(is);
              BufferedReader in = new BufferedReader(streamReader);) {
